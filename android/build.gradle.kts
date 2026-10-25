@@ -62,3 +62,8 @@ val copyAndroidNatives by tasks.registering(Copy::class) {
 }
 
 tasks.matching { it.name == "preBuild" }.configureEach { dependsOn(copyAndroidNatives) }
+
+// libGDX's Android backend pulls in a recent androidx.core, which insists on compileSdk 36; 1.15 builds against 35.
+configurations.configureEach {
+    resolutionStrategy.force("androidx.core:core:1.15.0")
+}
